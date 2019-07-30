@@ -1,7 +1,52 @@
 window.addEventListener('mouseover',function(e) {
-    applyMask(e.target);
+    changeBgColor(e, "#AABBFF")
 });
+window.addEventListener('mouseout',function(e) {
+    restoreBgColor(e)
+});
+function changeBgColor(myEvent, newBgColor)
+{
+  if (!myEvent)
+    myEvent=window.event;
+  if (!myEvent)
+    return;
+  var firingElement=null;
+  // Internet Explorer
+  if (myEvent.srcElement)
+    firingElement=myEvent.srcElement;  
 
+  // Netscape and Firefox
+  else if (myEvent.target)
+    firingElement=myEvent.target;    
+
+  if (firingElement)
+  {
+     firingElement.originalBgStyle=firingElement.style["backgroundColor"];
+     firingElement.style["backgroundColor"]=newBgColor;
+  }	 
+}
+
+function restoreBgColor(myEvent)
+{
+  if (!myEvent)
+    myEvent=window.event;
+  if (!myEvent)
+	return;
+  var firingElement=null;
+  // Internet Explorer
+  if (myEvent.srcElement)
+    firingElement=myEvent.srcElement;  
+
+  // Netscape and Firefox
+  else if (myEvent.target)
+    firingElement=myEvent.target;    
+
+
+  if (firingElement)
+  {
+    firingElement.style["backgroundColor"]=firingElement.originalBgStyle;
+  }	 
+}
 function applyMask(target) {
     if(document.getElementsByClassName('highlight-wrap').length > 0) {
         resizeMask(target);
